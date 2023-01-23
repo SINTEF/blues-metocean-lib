@@ -1,0 +1,34 @@
+{
+    "type": "system/SIMOS/Blueprint",
+    "name": "DatasetContainer",
+    "description": "",
+    "extends": [
+        "system/SIMOS/NamedEntity"
+    ],
+    "attributes": [
+        {
+            "attributeType": "string",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "name",
+            "optional": false,
+            "contained": true
+        },
+        {
+            "attributeType": "/DatasetContainer",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "containers",
+            "optional": true,
+            "contained": true,
+            "dimensions": "*"
+        },
+        {
+            "attributeType": "/Dataset",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "datasets",
+            "optional": true,
+            "contained": true,
+            "dimensions": "*"
+        }
+    ],
+    "uiRecipes": []
+}

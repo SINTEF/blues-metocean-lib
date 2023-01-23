@@ -1,0 +1,39 @@
+{
+    "type": "system/SIMOS/Blueprint",
+    "name": "DatasetVariable",
+    "description": "",
+    "extends": [
+        "system/SIMOS/NamedEntity"
+    ],
+    "attributes": [
+        {
+            "attributeType": "string",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "name",
+            "optional": false,
+            "contained": true
+        },
+        {
+            "attributeType": "string",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "description",
+            "optional": false,
+            "contained": true
+        },
+        {
+            "attributeType": "string",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "unit",
+            "optional": true,
+            "contained": true
+        },
+        {
+            "attributeType": "string",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "dimensions",
+            "optional": true,
+            "contained": true
+        }
+    ],
+    "uiRecipes": []
+}

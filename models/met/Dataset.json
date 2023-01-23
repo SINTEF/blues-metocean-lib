@@ -1,0 +1,56 @@
+{
+    "type": "system/SIMOS/Blueprint",
+    "name": "Dataset",
+    "description": "",
+    "extends": [
+        "system/SIMOS/NamedEntity"
+    ],
+    "attributes": [
+        {
+            "attributeType": "string",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "name",
+            "optional": false,
+            "contained": true
+        },
+        {
+            "attributeType": "string",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "fromDate",
+            "optional": true,
+            "contained": true
+        },
+        {
+            "attributeType": "string",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "url",
+            "optional": true,
+            "contained": true
+        },
+        {
+            "attributeType": "number",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "latitudes",
+            "optional": false,
+            "contained": true,
+            "dimensions": "*"
+        },
+        {
+            "attributeType": "number",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "longitudes",
+            "optional": false,
+            "contained": true,
+            "dimensions": "*"
+        },
+        {
+            "attributeType": "/DatasetVariable",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "variables",
+            "optional": true,
+            "contained": true,
+            "dimensions": "*"
+        }
+    ],
+    "uiRecipes": []
+}

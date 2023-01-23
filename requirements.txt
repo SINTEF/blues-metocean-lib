@@ -1,0 +1,12 @@
+requests==2.27.1
+tqdm==4.64.0
+dmtpy==0.3.0
+
+# Version 1.5.2 is needed since later versions are broken on Linux
+netCDF4==1.5.2
+numpy==1.23
+scipy==1.9.0
+python-dateutil==2.8.2
+
+# For windroses:
+windrose==1.8.1
