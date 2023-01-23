@@ -1,0 +1,30 @@
+{
+ "name" : "WindCurrent",
+ "type" : "system/SIMOS/Blueprint",
+ "description" : "Description for stochastic process at a sector.",
+ "abstract" : false,
+ "extends" : ["system/SIMOS/NamedEntity"],
+ "attributes" : [{
+   "name" : "level",
+   "type" : "system/SIMOS/BlueprintAttribute",
+   "attributeType" : "number",
+   "description" : "measured level."
+  }, {
+   "name" : "speed",
+   "type" : "system/SIMOS/BlueprintAttribute",
+   "attributeType" : "number",
+   "description" : "the scatter data for speed.",
+   "optional" : true,
+   "dimensions" : "*,*"
+  }, {
+   "name" : "direction",
+   "type" : "system/SIMOS/BlueprintAttribute",
+   "attributeType" : "number",
+   "description" : "the scatter data for direction.",
+   "optional" : true,
+   "dimensions" : "*,*"
+  }],
+ "storageRecipes" : [],
+ "uiRecipes" : []
+}
+

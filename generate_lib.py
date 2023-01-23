@@ -5,9 +5,7 @@ from dmttsgen import generator as tsgen
 def __generate_python(root):
     config = {
         "source" : True,
-        "cleanup" : cleanup,
-        "version" : "0.1.0",
-        "license" : "UNKNOWN"
+        "cleanup" : cleanup
     }
     output_dir = Path("./src/bluesmet")
     pygen.generate(root,output_dir,config)

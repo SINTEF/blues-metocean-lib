@@ -2,8 +2,8 @@
 
 import numpy as np
 from scipy.spatial import cKDTree
-from met.nora3.field import Field
-from met.nora3.fieldpoint import FieldPoint
+# from bluesmet.met.nora3.field import Field
+# from bluesmet.met.nora3.fieldpoint import FieldPoint
 
 
 # def __calculate_true_lon_lat(ds):
@@ -28,14 +28,14 @@ def nearest(lat,lon, lat_pos, lon_pos):
     return int(idx), int(idy)
 
 
-def find_nearest(field: Field, lat, lon):
-    """Find nearest wind hindcast coordinates"""
+# def find_nearest(field: Field, lat, lon):
+#     """Find nearest wind hindcast coordinates"""
 
-    f_lon = field.longitude
-    f_lat = field.latitude
+#     f_lon = field.longitude
+#     f_lat = field.latitude
 
-    for (lat_pos,lon_pos) in zip(f_lat,f_lon):
-        idx,idy = nearest(lat,lon,lat_pos,lon_pos)
-        grid_lon_pkt=float(lon[idy,idx])
-        grid_lat_pkt=float(lat[idy,idx])
-        field.points.append(FieldPoint(latitude=grid_lat_pkt,longitude=grid_lon_pkt))
+#     for (lat_pos,lon_pos) in zip(f_lat,f_lon):
+#         idx,idy = nearest(lat,lon,lat_pos,lon_pos)
+#         grid_lon_pkt=float(lon[idy,idx])
+#         grid_lat_pkt=float(lat[idy,idx])
+#         field.points.append(FieldPoint(latitude=grid_lat_pkt,longitude=grid_lon_pkt))

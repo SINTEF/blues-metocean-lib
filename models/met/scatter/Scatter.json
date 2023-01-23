@@ -1,0 +1,58 @@
+{
+ "name" : "Scatter",
+ "type" : "system/SIMOS/Blueprint",
+ "description" : "Description for scatter data based on Hs-Tp.",
+ "abstract" : false,
+ "extends" : ["system/SIMOS/NamedEntity"],
+ "attributes" : [{
+   "name" : "name",
+   "type" : "system/SIMOS/BlueprintAttribute",
+   "attributeType" : "string",
+   "description" : "name for the scatter data as appear in SIMA.",
+   "optional" : true
+  }, {
+   "name" : "hsUpperLimits",
+   "type" : "system/SIMOS/BlueprintAttribute",
+   "attributeType" : "number",
+   "description" : "upper limits of the boundaries for each row in the scatter data.",
+   "optional" : true,
+   "dimensions" : "*"
+  }, {
+   "name" : "tpUpperLimits",
+   "type" : "system/SIMOS/BlueprintAttribute",
+   "attributeType" : "number",
+   "description" : "upper limits of the boundaries for each column in the scatter data.",
+   "optional" : true,
+   "dimensions" : "*"
+  }, {
+   "name" : "seaStateDuration",
+   "type" : "system/SIMOS/BlueprintAttribute",
+   "attributeType" : "number",
+   "optional" : true,
+   "description" : "duration of sea state."
+  }, {
+   "name" : "countingPeriod",
+   "type" : "system/SIMOS/BlueprintAttribute",
+   "attributeType" : "number",
+   "description" : "the duration which is used to count the occurrence of events.",
+   "optional" : true
+  }, {
+   "name" : "sectors",
+   "type" : "system/SIMOS/BlueprintAttribute",
+   "attributeType" : "/scatter/Sector",
+   "dimensions" : "*",
+   "contained" : true,
+   "optional" : true,
+   "description" : "sector scatter data."
+  }, {
+   "name" : "omni",
+   "type" : "system/SIMOS/BlueprintAttribute",
+   "attributeType" : "/scatter/Sector",
+   "contained" : true,
+   "optional" : true,
+   "description" : "omni scatter data."
+  }],
+ "storageRecipes" : [],
+ "uiRecipes" : []
+}
+

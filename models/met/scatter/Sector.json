@@ -1,0 +1,46 @@
+{
+ "name" : "Sector",
+ "type" : "system/SIMOS/Blueprint",
+ "description" : "Description for stochastic process at a sector.",
+ "abstract" : false,
+ "extends" : ["system/SIMOS/NamedEntity"],
+ "attributes" : [{
+   "name" : "direction",
+   "type" : "system/SIMOS/BlueprintAttribute",
+   "attributeType" : "number",
+   "description" : "sector direction.",
+   "optional" : true
+  }, {
+   "name" : "sectorSize",
+   "type" : "system/SIMOS/BlueprintAttribute",
+   "attributeType" : "number",
+   "description" : "sector size.",
+   "optional" : true
+  }, {
+   "name" : "wave",
+   "type" : "system/SIMOS/BlueprintAttribute",
+   "attributeType" : "/scatter/Wave",
+   "contained" : true,
+   "optional" : true,
+   "description" : "the scatter data for wave."
+  }, {
+   "name" : "wind",
+   "type" : "system/SIMOS/BlueprintAttribute",
+   "attributeType" : "/scatter/WindCurrent",
+   "dimensions" : "*",
+   "contained" : true,
+   "optional" : true,
+   "description" : "the scatter data for wind at different levels."
+  }, {
+   "name" : "current",
+   "type" : "system/SIMOS/BlueprintAttribute",
+   "attributeType" : "/scatter/WindCurrent",
+   "dimensions" : "*",
+   "contained" : true,
+   "optional" : true,
+   "description" : "the scatter data for current at different levels."
+  }],
+ "storageRecipes" : [],
+ "uiRecipes" : []
+}
+

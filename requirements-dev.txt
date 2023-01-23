@@ -1,5 +1,6 @@
 dmtpygen
 dmttsgen
+build
 wheel
 twine
 pylint

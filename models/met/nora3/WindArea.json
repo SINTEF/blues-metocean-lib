@@ -1,0 +1,41 @@
+{
+    "type": "system/SIMOS/Blueprint",
+    "name": "WindArea",
+    "description": "",
+    "extends": [
+        "system/SIMOS/NamedEntity"
+    ],
+    "attributes": [
+        {
+            "attributeType": "string",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "label",
+            "optional": false,
+            "contained": true
+        },
+        {
+            "attributeType": "number",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "description": "Center of area, latitude",
+            "name": "latitude",
+            "optional": false,
+            "contained": true
+        },
+        {
+            "attributeType": "number",
+            "description": "Center of area, longitude",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "longitude",
+            "optional": false,
+            "contained": true
+        },
+        {
+            "attributeType": "/nora3/Field",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "fields",
+            "optional": false,
+            "contained": true,
+            "dimensions": "*"
+        }
+    ]
+}

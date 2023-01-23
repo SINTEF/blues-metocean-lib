@@ -1,0 +1,41 @@
+{
+    "type": "system/SIMOS/Blueprint",
+    "name": "Field",
+    "description": "",
+    "extends": [
+        "system/SIMOS/NamedEntity"
+    ],
+    "attributes": [
+        {
+            "attributeType": "string",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "label",
+            "optional": false,
+            "contained": true
+        },
+        {
+            "attributeType": "number",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "latitude",
+            "optional": false,
+            "contained": true,
+            "dimensions": "*"
+        },
+        {
+            "attributeType": "number",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "longitude",
+            "optional": false,
+            "contained": true,
+            "dimensions": "*"
+        },
+        {
+            "attributeType": "/nora3/FieldPoint",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "points",
+            "optional": false,
+            "contained": true,
+            "dimensions": "*"
+        }
+    ]
+}

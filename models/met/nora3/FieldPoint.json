@@ -1,0 +1,24 @@
+{
+    "type": "system/SIMOS/Blueprint",
+    "name": "FieldPoint",
+    "description": "",
+    "extends": [
+        "system/SIMOS/NamedEntity"
+    ],
+    "attributes": [
+        {
+            "attributeType": "number",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "latitude",
+            "optional": false,
+            "contained": true
+        },
+        {
+            "attributeType": "number",
+            "type": "system/SIMOS/BlueprintAttribute",
+            "name": "longitude",
+            "optional": false,
+            "contained": true
+        }
+    ]
+}
