@@ -1,0 +1,8 @@
+[MASTER]
+max-line-length=240
+disable=
+    invalid-name,
+    missing-final-newline,
+    C0114
+extension-pkg-whitelist=netCDF4
+ignored-modules=netCDF4

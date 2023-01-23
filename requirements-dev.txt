@@ -1,0 +1,7 @@
+build
+wheel
+twine
+pylint
+flake8
+black
+pytest
