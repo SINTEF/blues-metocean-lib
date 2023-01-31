@@ -62,9 +62,12 @@ class Cache:
                     dimensions[name]=variable.dimensions
         return variables
 
-    def to_cache_path(self, ddate: datetime,ix, iy) -> Path:
+    def to_cache_path(self, ddate: datetime,dim1: Dict, dim2: Dict) -> Path:
         year = ddate.strftime("%Y")
         month = ddate.strftime("%m")
         day = ddate.strftime("%d")
         hour = ddate.strftime("%H")
-        return Path(f"{self.location}/{year}/{month}/{day}/{hour}/{ix},{iy}.nc")
+        idx1 = next(iter(dim1.values()))
+        idx2 = next(iter(dim2.values()))
+        filename = f"{idx1},{idx2}.nc"
+        return Path(f"{self.location}/{year}/{month}/{day}/{hour}/{filename}")

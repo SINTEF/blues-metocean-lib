@@ -5,8 +5,9 @@ def test_norkyst():
     """Test Norkyst data access"""
     lat_pos = 64.1154
     lon_pos = 7.8877
-    start_date = datetime(2020, 10, 21)
-    end_date = datetime(2020, 11, 21)
+    # This data is stored 
+    start_date = datetime(2020, 10, 21,2)
+    end_date = datetime(2020, 10, 22,1)
     requested_values = [
         "u_eastward",
         "depth"
