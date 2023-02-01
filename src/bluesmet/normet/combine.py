@@ -91,8 +91,14 @@ def __subset(values, start_date: datetime, end_date: datetime,requested_values,d
         subidx = [idx for idx in range(len(indices)) if indices[idx]]
         values["time"] = time[subidx]
         for name in requested_values:
+            if name == "time":
+                continue
             if "time" in dimensions[name]:
                 idx = dimensions[name].index("time")
                 tvals = values[name]
-                subvalues = tvals.take(subidx, axis=idx)
-                values[name]=subvalues
+                try:
+                    subvalues = tvals.take(subidx, axis=idx)
+                    values[name]=subvalues
+                except IndexError:
+                    print(f"IndexError: name: {name}, idx: {idx}, subidx: {subidx}, tvals: {tvals}, dimensions[name]: {dimensions[name]}")
+                    raise
