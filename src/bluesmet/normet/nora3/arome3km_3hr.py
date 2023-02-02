@@ -42,11 +42,13 @@ def __get_url(date: datetime):
 def get_metadata():
     """Get metadata"""
     from_date = datetime(1993, 1, 1)
+    to_date = datetime(2020, 12, 31)
     url = __get_url(from_date)
     ds = Dataset("./cache/zdepths_his/", url, from_date)
     metadata = ds.get_metadata()
     metadata["global"] = {
         "fromDate": from_date.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "toDate": to_date.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "url": "https://thredds.met.no/thredds/catalog/nora3wavesubset_files/atm/catalog.html",
     }
     return metadata
