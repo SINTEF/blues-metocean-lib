@@ -160,12 +160,17 @@ class Dataset:
 
             variables = fonline.variables
 
+
+
             with nc.Dataset(date_cache_path, "w", format="NETCDF4") as dst:
                 remaining_dims = filedims.keys() - reduction_dims.keys()
                 for name, dim in filedims.items():
                     if name in remaining_dims:
                         dst.createDimension(name, dim.size)
-                for var_name in requested_values + ["time"]:
+                var_names = requested_values
+                if "time" not in var_names:
+                    var_names += ["time"]
+                for var_name in var_names:
                     var = variables[var_name]
                     vals = self.__reduce_dims(var, reduction_dims)
                     var_dims = [
