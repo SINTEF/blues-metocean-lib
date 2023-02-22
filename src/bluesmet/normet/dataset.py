@@ -1,4 +1,5 @@
 import os
+import shutil
 from datetime import datetime
 from typing import Dict, Sequence
 
@@ -156,48 +157,67 @@ class Dataset:
             filedims = fonline.dimensions
             for dim in reduction_dims:
                 if dim not in filedims:
-                    raise Exception(f"Reducing dimension {dim} not found in file {url}")
+                    raise ValueError(f"Reducing dimension {dim} not found in file {url}")
 
             variables = fonline.variables
+            intermediate = date_cache_path.with_suffix(".tmp")
 
+            if date_cache_path.exists():
+                shutil.copy(date_cache_path, intermediate)
 
-
-            with nc.Dataset(date_cache_path, "w", format="NETCDF4") as dst:
-                remaining_dims = filedims.keys() - reduction_dims.keys()
-                for name, dim in filedims.items():
-                    if name in remaining_dims:
-                        dst.createDimension(name, dim.size)
-                var_names = requested_values
-                if "time" not in var_names:
-                    var_names += ["time"]
-                for var_name in var_names:
-                    var = variables[var_name]
-                    vals = self.__reduce_dims(var, reduction_dims)
-                    var_dims = [
-                        dim for dim in var.dimensions if dim not in reduction_dims
-                    ]
-                    new_var = dst.createVariable(var_name, var.dtype, var_dims)
-                    new_var.setncatts(var.__dict__)
-                    new_var[:] = vals
-                    new_values[var_name] = vals
-                    dimensions[var_name] = var_dims
+            try:
+                with nc.Dataset(intermediate, "w", format="NETCDF4") as dst:
+                    remaining_dims = filedims.keys() - reduction_dims.keys()
+                    for name, dim in filedims.items():
+                        if name in remaining_dims:
+                            dst.createDimension(name, dim.size)
+                    var_names = requested_values
+                    if "time" not in var_names:
+                        var_names += ["time"]
+                    for var_name in var_names:
+                        var = variables[var_name]
+                        vals = self.__reduce_dims(var, reduction_dims)
+                        var_dims = [
+                            dim for dim in var.dimensions if dim not in reduction_dims
+                        ]
+                        new_var = dst.createVariable(var_name, var.dtype, var_dims)
+                        new_var.setncatts(var.__dict__)
+                        new_var[:] = vals
+                        new_values[var_name] = vals
+                        dimensions[var_name] = var_dims
+                shutil.move(intermediate, date_cache_path)
+            except Exception as e:
+                if intermediate.exists():
+                    os.remove(intermediate)
+                raise e
 
     def __append(self, url, missing, reduction_dims, date_cache_path, dimensions):
         with nc.Dataset(url, "r") as fonline:
             print(f"Downloading {url}")
 
-            with nc.Dataset(date_cache_path, "a", format="NETCDF4") as dst:
-                for var_name in missing.keys():
-                    var = fonline.variables[var_name]
-                    vals = self.__reduce_dims(var, reduction_dims)
-                    var_dims = [
-                        dim for dim in var.dimensions if dim not in reduction_dims
-                    ]
-                    new_var = dst.createVariable(var_name, var.dtype, var_dims)
-                    new_var.setncatts(var.__dict__)
-                    new_var[:] = vals
-                    missing[var_name] = vals
-                    dimensions[var_name] = var_dims
+            intermediate = date_cache_path.with_suffix(".tmp")
+
+            if date_cache_path.exists():
+                shutil.copy(date_cache_path, intermediate)
+
+            try:
+                with nc.Dataset(intermediate, "a", format="NETCDF4") as dst:
+                    for var_name in missing.keys():
+                        var = fonline.variables[var_name]
+                        vals = self.__reduce_dims(var, reduction_dims)
+                        var_dims = [
+                            dim for dim in var.dimensions if dim not in reduction_dims
+                        ]
+                        new_var = dst.createVariable(var_name, var.dtype, var_dims)
+                        new_var.setncatts(var.__dict__)
+                        new_var[:] = vals
+                        missing[var_name] = vals
+                        dimensions[var_name] = var_dims
+                shutil.move(intermediate, date_cache_path)
+            except Exception as e:
+                if intermediate.exists():
+                    os.remove(intermediate)
+                raise e
 
 
     def get_metadata(self):
