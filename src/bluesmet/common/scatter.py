@@ -86,12 +86,12 @@ class Scatter:
             largest = max(largest, max(bins))
         return largest + 1
 
-    def upper_rows(self) -> ndarray:
+    def row_values(self) -> ndarray:
         """Upper row values"""
         nrows = self.num_rows() + 1
         return arange(self.bin_size, nrows * self.bin_size, self.bin_size)
 
-    def upper_columns(self) -> ndarray:
+    def column_values(self) -> ndarray:
         """Upper column values"""
         ncols = self.num_columns() + 1
         return arange(self.bin_size, ncols * self.bin_size, self.bin_size)
@@ -140,8 +140,8 @@ class Scatter:
     def __str__(self):
         return json.dumps(
             {
-                "row": self.upper_rows().tolist(),
-                "column": self.upper_columns().tolist(),
+                "row": self.row_values().tolist(),
+                "column": self.column_values().tolist(),
                 "occurences": self.occurences().tolist(),
             },
         )
@@ -172,8 +172,8 @@ def main():
     scatter1.combine(scatter2)
     print(scatter1)
 
-    print("hs=" + str(scatter1.upper_rows()))
-    print("tp=" + str(scatter1.upper_columns()))
+    print("hs=" + str(scatter1.row_values()))
+    print("tp=" + str(scatter1.column_values()))
     print(scatter1.occurences())
     print("Scatter of wavedir=")
 
