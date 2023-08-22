@@ -35,7 +35,7 @@ def get_values_between(
 def __get_url(date: datetime):
     basename = "arome3km_3hr"
     datlab = date.strftime("%Y%m")
-    base_url = "https://thredds.met.no/thredds/dodsC/nora3wavesubset_files/atm"
+    base_url = "https://thredds.met.no/thredds/dodsC/nora3wavesubset_files/atm_v2"
     return f"{base_url}/{basename}_{datlab}.nc" + "#fillmismatch"
 
 
