@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import shutil
 from datetime import datetime
 from typing import Dict, Sequence
@@ -79,8 +80,8 @@ class Dataset:
         coordinates: Dict,
         requested_values: Sequence[str],
         dimensions: Dict,
-    ) -> Dict:
-        """Get  data organized using lat,lon and date. Will cache data"""
+    ) -> Path:
+        """Get  data organized using lat,lon and date. Will cache data. Returns path to cached file"""
         new_values = {"time": None}
         for name in requested_values:
             new_values[name] = None
@@ -122,7 +123,7 @@ class Dataset:
                 self.__append(self.url, missing, reduction_dims, date_cache_path, dimensions)
                 new_values.update(missing)
 
-        return new_values
+        return date_cache_path
 
     def __reduce_dims(self, var, reduction_dims):
         newdims = {}

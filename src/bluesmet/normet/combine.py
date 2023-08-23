@@ -1,8 +1,10 @@
 from datetime import datetime
+from pathlib import Path
 from typing import Callable, Sequence
 from dateutil import rrule
 import numpy as np
 from .dataset import Dataset
+import xarray as xr
 
 
 def get_values_between(
@@ -18,7 +20,7 @@ def get_values_between(
     url_converter: Callable[[datetime], str],
 ):
     """Return values for norkyst current subset"""
-    values = {}
+    values = None
 
     # FIXME: The rrule.constant is not a good api
     # Should we instead use a list of dates with the according url?
@@ -34,20 +36,34 @@ def get_values_between(
     # if "time" not in all_values:
     #     all_values.append("time")
 
+   
+
     dates = rrule.rrule(frequency, dtstart=start_date, until=end_date)
+    paths = []
     for date in dates:
         dimensions = {}
-        new_values = __get_values_for_date(
+        path = __get_values_for_date(
             date, coordinates, all_values, dimensions, cache_location, url_converter
         )
-        __concatenate_time_arrays(values, new_values, dimensions)
+        paths.append(path)
+        # __concatenate_time_arrays(values, new_values, dimensions)
 
-    __subset(values, start_date, end_date, all_values, dimensions)
+    # __subset(values, start_date, end_date, all_values, dimensions)
 
-    values["latitude_actual"] = coordinates["latitude_actual"]
-    values["longitude_actual"] = coordinates["longitude_actual"]
+    # Open and combine the datasets
+    for file_path in paths:
+        ds = xr.open_dataset(file_path)
+        if values is None:
+            values = ds
+        else:
+            values = xr.concat([values, ds], dim='time')
+        ds.close()
 
-    return values
+    attributes = values.attrs
+    attributes["latitude"] = coordinates["latitude_actual"]
+    attributes["longitude"] = coordinates["longitude_actual"]
+
+    return values.sel(time=slice(start_date, end_date))
 
 
 def __create_dataset(date: datetime, cache_location, url_converter):
@@ -64,7 +80,7 @@ def __get_values_for_date(
     dimensions,
     cache_location,
     url_converter,
-):
+) -> Path:
     """Return values for nora3 wave subset"""
     ds = __create_dataset(date, cache_location, url_converter)
     return ds.get_values(coordinates, requested_values, dimensions)
@@ -83,7 +99,7 @@ def __subset(values, start_date: datetime, end_date: datetime,requested_values,d
     """Reshape the values to lie between the given dates"""
     start_time = start_date.timestamp()
     end_time = end_date.timestamp()
-    time =  values["time"].astype(np.long)
+    time =  values["time"].astype(np.float64)
     ts=time[0]
     te=time[-1]
     if ts < start_time or te > end_time:

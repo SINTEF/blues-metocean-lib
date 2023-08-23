@@ -44,7 +44,7 @@ def get_metadata():
     from_date = datetime(1993, 1, 1)
     to_date = datetime(2020, 12, 31)
     url = __get_url(from_date)
-    ds = Dataset("./cache/zdepths_his/", url, from_date)
+    ds = Dataset("./cache/arome3km_3hr/", url, from_date)
     metadata = ds.get_metadata()
     metadata["global"] = {
         "fromDate": from_date.strftime("%Y-%m-%dT%H:%M:%SZ"),
