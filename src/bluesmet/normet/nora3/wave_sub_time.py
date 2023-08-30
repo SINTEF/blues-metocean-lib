@@ -15,6 +15,7 @@ def get_values_between(
     end_date: datetime,
     requested_values: Sequence[str],
     cache_location="./cache/wave_sub_time/",
+    max_concurrent_downloads = 1
 ):
     """Return values for wave_sub_time dataset"""
 
@@ -29,6 +30,7 @@ def get_values_between(
         rrule.MONTHLY,
         cache_location,
         __get_url,
+        max_concurrent_downloads
     )
 
 
@@ -42,8 +44,8 @@ def __get_url(date: datetime):
 
 def get_metadata():
     """Get metadata"""
-    from_date = datetime(1993, 1, 1)
-    to_date = datetime(2020, 12, 31)
+    from_date = datetime(1989, 1, 1)
+    to_date = datetime(2022, 12, 31)
     url = __get_url(from_date)
     ds = Dataset("./cache/wave_sub_time/", url, from_date)
     metadata = ds.get_metadata()

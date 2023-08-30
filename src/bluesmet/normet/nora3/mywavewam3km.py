@@ -15,6 +15,7 @@ def get_values_between(
     end_date: datetime,
     requested_values: Sequence[str],
     cache_location="./cache/mywavewam3km/",
+    max_concurrent_downloads = 1
 ):
     """Return values for windsurfer/mywavewam3km dataset"""
 
@@ -29,6 +30,7 @@ def get_values_between(
         rrule.DAILY,
         cache_location,
         __get_url,
+         max_concurrent_downloads
     )
 
 

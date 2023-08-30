@@ -67,15 +67,16 @@ class Cache:
                         variable = f0.variables[name]
                         variables[name]=variable[:]
                         dimensions[name]=variable.dimensions
-            # There are missing variables, so we must transfer these values to the cache
-            with nc.Dataset(url,"r") as f0:
-                self.__store_subset(f0,names, filename)
-            # Now we can return the values
-            with nc.Dataset(filename,"r") as f0:
-                for name in names:
-                    variable = f0.variables[name]
-                    variables[name] = variable[:]
-                    dimensions[name]=variable.dimensions
+                else:
+                    # There are missing variables, so we must transfer these values to the cache
+                    with nc.Dataset(url,"r") as f0:
+                        self.__store_subset(f0,names, filename)
+                    # Now we can return the values
+                    with nc.Dataset(filename,"r") as f0:
+                        for name in names:
+                            variable = f0.variables[name]
+                            variables[name] = variable[:]
+                            dimensions[name]=variable.dimensions
         return variables
 
     def to_cache_path(self, ddate: datetime,dim1: Dict, dim2: Dict) -> Path:

@@ -1,10 +1,13 @@
 from datetime import datetime
 from pathlib import Path
 from typing import Callable, Sequence
-from dateutil import rrule
-import numpy as np
-from .dataset import Dataset
+
+import concurrent.futures
+import pandas as pd
 import xarray as xr
+from dateutil import rrule
+
+from .dataset import Dataset
 
 
 def get_values_between(
@@ -18,12 +21,9 @@ def get_values_between(
     frequency: int,
     cache_location: str,
     url_converter: Callable[[datetime], str],
+    max_concurrent_downloads = 1
 ):
-    """Return values for norkyst current subset"""
-    values = None
-
-    # FIXME: The rrule.constant is not a good api
-    # Should we instead use a list of dates with the according url?
+    """Return values beween the given dates for the given coordinates"""
 
     coordinates = {
         "latitude": lat_pos,
@@ -33,27 +33,47 @@ def get_values_between(
     }
 
     all_values = requested_values
-    # if "time" not in all_values:
-    #     all_values.append("time")
-
-   
 
     dates = rrule.rrule(frequency, dtstart=start_date, until=end_date)
     paths = []
-    for date in dates:
+
+    def process_date(date):
         dimensions = {}
         path = __get_values_for_date(
             date, coordinates, all_values, dimensions, cache_location, url_converter
         )
-        paths.append(path)
-        # __concatenate_time_arrays(values, new_values, dimensions)
+        return path
 
-    # __subset(values, start_date, end_date, all_values, dimensions)
+
+    if max_concurrent_downloads > 1:
+        # Use ThreadPoolExecutor for parallel processing
+        with concurrent.futures.ThreadPoolExecutor(max_workers=max_concurrent_downloads) as executor:
+            # Submit tasks for each date and get the results as they complete
+            future_to_date = {executor.submit(process_date, date): date for date in dates}
+            # Wait for all to complete
+            try:
+                concurrent.futures.wait(future_to_date)
+                for future in future_to_date:
+                    path = future.result()
+                    paths.append(path)
+            # pylint: disable=broad-except
+            except Exception as e:
+                print(f"Error processing dates: {e}")
+    else:
+        # No concurrent processing
+        for date in dates:
+            path = process_date(date)
+            paths.append(path)
+        
+
+    values = xr.Dataset()
+    uninitialized = True
 
     # Open and combine the datasets
     for file_path in paths:
         ds = xr.open_dataset(file_path)
-        if values is None:
+        if uninitialized:
+            uninitialized = False
             values = ds
         else:
             values = xr.concat([values, ds], dim='time')
@@ -63,6 +83,8 @@ def get_values_between(
     attributes["latitude"] = coordinates["latitude_actual"]
     attributes["longitude"] = coordinates["longitude_actual"]
 
+    # Now convert the time to datetime before we return the dataset
+    values["time"] = pd.to_datetime(values["time"].values, unit='s')
     return values.sel(time=slice(start_date, end_date))
 
 
@@ -84,37 +106,3 @@ def __get_values_for_date(
     """Return values for nora3 wave subset"""
     ds = __create_dataset(date, cache_location, url_converter)
     return ds.get_values(coordinates, requested_values, dimensions)
-
-
-def __concatenate_time_arrays(values, new, dimensions):
-    for name, vals in new.items():
-        value = values.get(name)
-        if value is None:
-            values[name] = vals
-        elif "time" in dimensions[name]:
-            cced = np.ma.concatenate((value, vals))
-            values[name] = cced
-
-def __subset(values, start_date: datetime, end_date: datetime,requested_values,dimensions):
-    """Reshape the values to lie between the given dates"""
-    start_time = start_date.timestamp()
-    end_time = end_date.timestamp()
-    time =  values["time"].astype(np.float64)
-    ts=time[0]
-    te=time[-1]
-    if ts < start_time or te > end_time:
-        indices = (time >= start_time) & (time <= end_time)
-        subidx = [idx for idx in range(len(indices)) if indices[idx]]
-        values["time"] = time[subidx]
-        for name in requested_values:
-            if name == "time":
-                continue
-            if "time" in dimensions[name]:
-                idx = dimensions[name].index("time")
-                tvals = values[name]
-                try:
-                    subvalues = tvals.take(subidx, axis=idx)
-                    values[name]=subvalues
-                except IndexError:
-                    print(f"IndexError: name: {name}, idx: {idx}, subidx: {subidx}, tvals: {tvals}, dimensions[name]: {dimensions[name]}")
-                    raise
