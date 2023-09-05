@@ -3,3 +3,6 @@ netCDF4
 scipy
 python-dateutil
 xarray
+virocon
+xclim
+seaborn
