@@ -3,12 +3,7 @@
 Illustrates fetching data from different sources. 
 Necessary dependencies installed using
 
-If you are on a windows machine:
-
-pip install -r requirements-win.txt
-
-On Linux:
-pip install -r requirements-linux.txt
+pip install -r requirements.txt
 
 Development dependencies installed using
 
