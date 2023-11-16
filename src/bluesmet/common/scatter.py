@@ -3,7 +3,7 @@ from math import floor
 from typing import Callable, Dict, Sequence, Tuple
 
 import numpy as np
-from numpy import arange, ndarray, number
+from numpy import arange, ndarray
 
 
 class Scatter:
@@ -36,7 +36,7 @@ class Scatter:
         self.bin_size = bin_size
         self.bins = Scatter.Bins()
 
-    def add(self, x: number, y: number, **kwargs) -> Dict:
+    def add(self, x: float, y: float, **kwargs) -> Dict:
         """Add a point to the scatter. Optionally add additional data stored in the bin"""
         xbin = floor(x / self.bin_size)
         ybin = floor(y / self.bin_size)
@@ -82,8 +82,8 @@ class Scatter:
         """Number of columns"""
         largest = -1
         for ybin in self.bins.values():
-            bins = [int(row) for row in ybin.keys()]
-            largest = max(largest, max(bins))
+            mbin = max(int(row) for row in ybin.keys())
+            largest = max(largest, mbin)
         return largest + 1
 
     def row_values(self) -> ndarray:
@@ -106,7 +106,7 @@ class Scatter:
                 occurences[row][column] = int(ybin["occurences"])
         return occurences
 
-    def mean_xy(self) -> Tuple[number, number]:
+    def mean_xy(self) -> Tuple[float, float]:
         """Mean x and y"""
         xp = 0.0
         yp = 0.0

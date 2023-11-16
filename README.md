@@ -2,6 +2,8 @@
 
 Illustrates fetching metocean data from different sources. 
 
+Find example usage in the examples folder
+
 ## Installation
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install simapy.
@@ -22,4 +24,4 @@ pip install -r requirements-dev.txt
 
 Developed for use with the  [SFI Blues Metocean portal](https://sfiblues-portal.azurewebsites.net/met)
 
-Find example usage [here](https://github.com/SINTEF/blues-metocean-lib-examples)
+

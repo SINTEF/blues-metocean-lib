@@ -1,0 +1,5 @@
+# Additional requirements for the example
+windrose==1.8.1
+openpyxl
+python-docx
+simapy==4.6.0

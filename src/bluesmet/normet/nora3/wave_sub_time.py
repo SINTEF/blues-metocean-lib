@@ -17,7 +17,94 @@ def get_values_between(
     cache_location="./cache/wave_sub_time/",
     max_concurrent_downloads = 1
 ):
-    """Return values for wave_sub_time dataset"""
+    """Return values for wave_sub_time dataset
+    
+    Pdir
+    standard_name: sea_surface_wave_to_direction_at_variance_spectral_density_maximu
+    long_name: peak direction
+    units: degree
+
+    dd
+    standard_name: wind_to_direction
+    long_name: Wind direction
+    units: degree
+
+    ff
+    standard_name: wind_speed
+    long_name: Wind speed
+    units: m s-1
+
+    fpl
+    standard_name: interpolated_peak_frequency
+    long_name: interpolated peak frequency
+    units: s
+
+    hs
+    standard_name: sea_surface_wave_significant_height
+    long_name: Total significant wave height
+    units: m
+
+    hs_sea
+    standard_name: sea_surface_wind_wave_significant_height
+    long_name: Sea significant wave height
+    units: m
+
+    hs_swell
+    standard_name: sea_surface_swell_wave_significant_height
+    long_name: Swell significant wave height
+    units: m
+
+    model_depth
+    standard_name: sea_floor_depth_below_sea_level
+    long_name: water depth
+    units: m
+
+    thq
+    standard_name: sea_surface_wave_to_direction
+    long_name: Total mean wave direction
+    units: degree
+
+    thq_sea
+    standard_name: sea_surface_wind_wave_to_direction
+    long_name: Sea mean wave direction
+    units: degree
+
+    thq_swell
+    standard_name: sea_surface_swell_wave_to_direction
+    long_name: Swell mean wave direction
+    units: degree
+
+    tm1
+    standard_name: sea_surface_wave_mean_period_from_variance_spectral_density_first_frequency_moment
+    long_name: Total m1-period
+    units: s
+
+    tm2
+    standard_name: sea_surface_wave_mean_period_from_variance_spectral_density_second_frequency_moment
+    long_name: Total m2-period
+    units: s
+
+    tmp
+    standard_name: sea_surface_wave_mean_period_from_variance_spectral_density_inverse_frequency_moment
+    long_name: Total mean period
+    units: s
+
+    tp
+    standard_name: sea_surface_wave_period_at_variance_spectral_density_maximum
+    long_name: Total peak period
+    units: s
+
+    tp_sea
+    standard_name: sea_surface_wind_wave_peak_period_from_variance_spectral_density
+    long_name: Sea peak period
+    units: s
+
+    tp_swell
+    standard_name: sea_surface_swell_wave_peak_period_from_variance_spectral_density
+    long_name: Swell peak period
+    units: s
+
+    """
 
     return get_values(
         requested_values,
