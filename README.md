@@ -1,6 +1,17 @@
 # SFIBlues Metocean library
 
-Illustrates fetching data from different sources. 
+Illustrates fetching metocean data from different sources. 
+
+## Installation
+
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install simapy.
+
+```bash
+pip install bluesmet
+```
+
+## Development
+
 Necessary dependencies installed using
 
 pip install -r requirements.txt
