@@ -32,7 +32,8 @@ def get_values_between(
         "lat_name": lat_name,
     }
 
-    all_values = requested_values
+    # The list of required values might be altered in lower layers if dependent values are required
+    all_values = list(requested_values)
 
     dates = rrule.rrule(frequency, dtstart=start_date, until=end_date)
     paths = []
