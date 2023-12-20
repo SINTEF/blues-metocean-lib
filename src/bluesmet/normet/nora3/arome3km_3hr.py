@@ -37,20 +37,20 @@ def get_values_between(
 def __get_url(date: datetime):
     basename = "arome3km_3hr"
     datlab = date.strftime("%Y%m")
-    base_url = "https://thredds.met.no/thredds/dodsC/nora3wavesubset_files/atm_v2"
+    base_url = "https://thredds.met.no/thredds/dodsC/nora3_subset_atmos/atm_3hourly"
     return f"{base_url}/{basename}_{datlab}.nc"
 
 
 def get_metadata():
     """Get metadata"""
-    from_date = datetime(1980, 1, 1)
-    to_date = datetime(2020, 12, 31)
+    from_date = datetime(1970, 1, 1)
+    to_date = datetime(2023, 7, 31)
     url = __get_url(from_date)
     ds = Dataset("./cache/arome3km_3hr/", url, from_date)
     metadata = ds.get_metadata()
     metadata["global"] = {
         "fromDate": from_date.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "toDate": to_date.strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "url": "https://thredds.met.no/thredds/catalog/nora3wavesubset_files/atm_v2/catalog.html",
+        "url": "https://thredds.met.no/thredds/catalog/nora3_subset_atmos/atm_3hourly/catalog.html",
     }
     return metadata
