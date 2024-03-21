@@ -36,7 +36,7 @@ def get_values_between(
 
 def __get_url(date: datetime):
     basename = "NORA3wave_sub_time_unlimited"
-    base_url = "https://thredds.met.no/thredds/dodsC/nora3wavesubset_files/wave_v4/"
+    base_url = "https://thredds.met.no/thredds/dodsC/nora3_subset_wave/wave_tser/"
     dataset_name = f"_{basename}"
     datlab = date.strftime("%Y%m")
     return base_url + datlab + dataset_name + ".nc"
@@ -52,6 +52,6 @@ def get_metadata():
     metadata["global"] = {
         "fromDate": from_date.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "toDate": to_date.strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "url": "https://thredds.met.no/thredds/catalog/nora3wavesubset_files/wave_v4/catalog.html",
+        "url": "https://thredds.met.no/thredds/catalog/nora3_subset_wave/wave_tser/catalog.html",
     }
     return metadata
