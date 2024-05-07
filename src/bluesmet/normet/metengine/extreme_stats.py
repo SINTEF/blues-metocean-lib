@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from virocon import get_OMAE2020_Hs_Tz, GlobalHierarchicalModel,IFORMContour
 from xclim.indices.stats import frequency_analysis
 """
-Temporarily copied from https://github.com/MET-OM/metocean_engine/blob/dev/metocean_engine/extreme_stats.py with permissions until the library is made public
+Temporarily copied from https://github.com/MET-OM/metocean-stats/blob/main/metocean_stats/stats/extreme_stats.py with permissions
 
 """
 
@@ -82,8 +82,8 @@ def joint_2D_contour(hs: xr.DataArray,tp: xr.DataArray, return_periods=[50,100],
             ax.plot(x, y, color=color[i],label=str(rp)+'y')
 
         if hs.name and tp.name:
-            ax.set_xlabel(hs.name)
-            ax.set_ylabel(tp.name)
+            ax.set_xlabel(tp.name)
+            ax.set_ylabel(hs.name)
         plt.grid()
         if image_title:
             plt.title(image_title)
